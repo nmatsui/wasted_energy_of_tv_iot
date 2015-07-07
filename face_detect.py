@@ -5,8 +5,9 @@ import mraa
 import sys
 
 from lib import ConsulWrapper as cw
+from lib import LEDWrapper as lw
 
-PIN = 8
+LED_PIN = 8
 
 class FaceDetector(object):
     SCALE_FACTOR = 1.1
@@ -14,16 +15,9 @@ class FaceDetector(object):
     MIN_SIZE = (20, 20)
 
     def __init__(self, cascade_file_name):
-        self.led = mraa.Gpio(PIN)
-        self.led.dir(mraa.DIR_OUT)
-        self.led.write(0) 
-
-        self.faceClassifier = cv2.CascadeClassifier(cascade_file_name)
-
+        self.led = lw.LEDWrapper(LED_PIN)
         self.consul = cw.ConsulWrapper()
-
-    def __del__(self):
-        self.led.write(0)
+        self.faceClassifier = cv2.CascadeClassifier(cascade_file_name)
 
     def detect(self):
         while True:
@@ -42,10 +36,10 @@ class FaceDetector(object):
     def __notify_detect(self, num_of_faces):
         print "%d face(s) detected" % num_of_faces
         if num_of_faces == 0:
-            self.led.write(0)
+            self.led.off()
             self.consul.kv_put(cw.ConsulWrapper.FACEDETECT_KEY, False)
         else:
-            self.led.write(1)
+            self.led.on()
             self.consul.kv_put(cw.ConsulWrapper.FACEDETECT_KEY, True)
 
 if __name__ == "__main__":
