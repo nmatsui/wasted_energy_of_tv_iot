@@ -6,7 +6,6 @@ class ConsulWrapper(object):
     FACEDETECT_KEY = "face_detected"
 
     def __init__(self):
-        print "ConsulWrapper init"
         self.c = consul.Consul()
 
     def kv_put(self, key, value):
