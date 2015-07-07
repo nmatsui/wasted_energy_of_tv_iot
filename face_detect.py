@@ -4,6 +4,8 @@ import cv2
 import mraa
 import sys
 
+from lib import ConsulWrapper as cw
+
 PIN = 8
 
 class FaceDetector(object):
@@ -17,6 +19,8 @@ class FaceDetector(object):
         self.led.write(0) 
 
         self.faceClassifier = cv2.CascadeClassifier(cascade_file_name)
+
+        self.consul = cw.ConsulWrapper()
 
     def __del__(self):
         self.led.write(0)
@@ -39,8 +43,10 @@ class FaceDetector(object):
         print "%d face(s) detected" % num_of_faces
         if num_of_faces == 0:
             self.led.write(0)
+            self.consul.kv_put(cw.ConsulWrapper.FACEDETECT_KEY, False)
         else:
             self.led.write(1)
+            self.consul.kv_put(cw.ConsulWrapper.FACEDETECT_KEY, True)
 
 if __name__ == "__main__":
     if len(sys.argv) != 2:
