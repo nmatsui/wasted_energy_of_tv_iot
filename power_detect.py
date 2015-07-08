@@ -5,6 +5,7 @@ import mraa
 import time
 
 from lib import Decoder as decoder
+from lib import ConsulWrapper as cw
 from lib import IRWrapper as iw
 from lib import LEDWrapper as lw
 
@@ -19,6 +20,7 @@ class PowerDetector(object):
     def __init__(self):
         self.ir = iw.IRWrapper(IR_PIN)
         self.led = lw.LEDWrapper(LED_PIN)
+        self.consul = cw.ConsulWrapper()
         self.power = False
         self.__reset()
 
@@ -57,8 +59,10 @@ class PowerDetector(object):
         print "power button pressed. now %s" % self.power
         if self.power:
             self.led.on()
+            self.consul.kv_put(cw.ConsulWrapper.POWERDETECT_KEY, True)
         else:
             self.led.off()
+            self.consul.kv_put(cw.ConsulWrapper.POWERDETECT_KEY, False)
 
     def __reset(self):
         self.recv = False
