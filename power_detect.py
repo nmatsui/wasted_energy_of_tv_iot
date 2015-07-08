@@ -6,16 +6,19 @@ import time
 
 from lib import Decoder as decoder
 from lib import IRWrapper as iw
+from lib import LEDWrapper as lw
 
 IR_PIN = 7
+LED_PIN = 8
 SPACE_SEC = 1
 
 class PowerDetector(object):
     POWER_BITS = "010000000000010000000001000000001011110010111101"
     FLAME_SPACE = 50
 
-    def __init__(self, ir_pin):
-        self.ir = iw.IRWrapper(ir_pin)
+    def __init__(self):
+        self.ir = iw.IRWrapper(IR_PIN)
+        self.led = lw.LEDWrapper(LED_PIN)
         self.power = False
         self.__reset()
 
@@ -52,6 +55,10 @@ class PowerDetector(object):
 
     def __notify_detect(self):
         print "power button pressed. now %s" % self.power
+        if self.power:
+            self.led.on()
+        else:
+            self.led.off()
 
     def __reset(self):
         self.recv = False
@@ -64,6 +71,6 @@ class PowerDetector(object):
 if __name__ == "__main__":
     try:
         print "power_detect start"
-        PowerDetector(IR_PIN).detect()
+        PowerDetector().detect()
     except KeyboardInterrupt as err:
         print "power_detect end"
