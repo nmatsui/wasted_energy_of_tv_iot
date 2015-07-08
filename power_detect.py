@@ -15,7 +15,7 @@ SPACE_SEC = 1
 
 class PowerDetector(object):
     POWER_BITS = "010000000000010000000001000000001011110010111101"
-    FLAME_SPACE = 50
+    FLAME_SPACE = 30
 
     def __init__(self):
         self.ir = iw.IRWrapper(IR_PIN)
@@ -70,7 +70,7 @@ class PowerDetector(object):
         self.st = 0
         self.nt = 0
         self.code = []
-        self.last_power_time = time.time()
+        self.last_power_time = 0
 
 if __name__ == "__main__":
     try:
