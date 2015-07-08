@@ -11,3 +11,7 @@ class ConsulWrapper(object):
 
     def kv_put(self, key, value):
         self.c.kv.put(key, str(value))
+
+    def kv_get(self, key):
+        i, v = self.c.kv.get(key)
+        return v
