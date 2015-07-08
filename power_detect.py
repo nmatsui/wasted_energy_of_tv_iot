@@ -1,7 +1,6 @@
 #! /usr/bin/env python
 # -*- coding: utf-8 -*-
 
-import mraa
 import time
 
 from lib import Decoder as decoder

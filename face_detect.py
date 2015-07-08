@@ -1,7 +1,6 @@
 #! /usr/bin/env python
 
 import cv2
-import mraa
 import sys
 
 from lib import ConsulWrapper as cw
