@@ -1,13 +1,17 @@
 #! /usr/bin/env python
 # -*- coding: utf-8 -*-
 
+import sys
 import time
+
 from datetime import datetime as dt
+from lib import BluemixWrapper as bw
 from lib import ConsulWrapper as cw
 
 class WatchRatePublisher(object):
-    def __init__(self):
+    def __init__(self, iotfoundation_conf):
         self.consul = cw.ConsulWrapper()
+        self.bluemix = bw.BluemixWrapper(iotfoundation_conf)
 
     def check_state(self):
         while True:
@@ -30,10 +34,15 @@ class WatchRatePublisher(object):
 
     def __publish(self, msg):
         print "power True : %s" % msg
+        self.bluemix.publish(msg)
 
 if __name__ == "__main__":
+    if len(sys.argv) != 2:
+        print "Usage: %s iotfoundation_conf_file_name" % sys.argv[0]
+        sys.exit()
+
     try:
         print "watch_rate_publish start"
-        WatchRatePublisher().check_state()
+        WatchRatePublisher(sys.argv[1]).check_state()
     except KeyboardInterrupt as err:
         print "watch_rate_publish end" 
