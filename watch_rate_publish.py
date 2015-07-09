@@ -8,6 +8,8 @@ from datetime import datetime as dt
 from lib import BluemixWrapper as bw
 from lib import ConsulWrapper as cw
 
+SLEEP = 5
+
 class WatchRatePublisher(object):
     def __init__(self, iotfoundation_conf):
         self.consul = cw.ConsulWrapper()
@@ -22,7 +24,7 @@ class WatchRatePublisher(object):
                 msg = self.__make_msg(self.__isDetected(face))
                 self.__publish(msg)
 
-            time.sleep(10)
+            time.sleep(SLEEP)
 
     def __isDetected(self, v):
         return True if v and v["Value"] == "True" else False
