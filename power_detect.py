@@ -7,24 +7,35 @@ from lib import Decoder as decoder
 from lib import ConsulWrapper as cw
 from lib import IRWrapper as iw
 from lib import LEDWrapper as lw
+from lib import SWWrapper as sw
 
 IR_PIN = 7
 LED_PIN = 8
+SW_ON_PIN = 3
+SW_OFF_PIN = 2
 SPACE_SEC = 1
 
 class PowerDetector(object):
     POWER_BITS = "010000000000010000000001000000001011110010111101"
-    FLAME_SPACE = 30
+    FLAME_SPACE = 50
 
     def __init__(self):
         self.ir = iw.IRWrapper(IR_PIN)
         self.led = lw.LEDWrapper(LED_PIN)
+        self.sw = sw.SWWrapper(SW_ON_PIN, SW_OFF_PIN)
         self.consul = cw.ConsulWrapper()
         self.power = False
         self.__reset()
 
     def detect(self):
         while True:
+            sw_on = self.sw.is_on()
+            sw_off = self.sw.is_off()
+            if sw_on or sw_off:
+                self.power = sw_on
+                self.__notify_detect()
+                continue
+
             current = self.ir.read()
             self.nt = time.time() * 1000
             if self.last != current:
