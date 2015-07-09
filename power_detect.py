@@ -14,7 +14,7 @@ SPACE_SEC = 1
 
 class PowerDetector(object):
     POWER_BITS = "010000000000010000000001000000001011110010111101"
-    FLAME_SPACE = 30
+    FLAME_SPACE = 50
 
     def __init__(self):
         self.ir = iw.IRWrapper(IR_PIN)
