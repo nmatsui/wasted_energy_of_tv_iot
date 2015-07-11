@@ -18,6 +18,7 @@ class BluemixWrapper(object):
         self.mqttc = paho.Client(client_name)
         self.mqttc.username_pw_set(USER, token)
         self.mqttc.connect(url, PORT, 60)
+        self.mqttc.loop_start()
 
     def publish(self, msg):
         self.mqttc.publish(TOPIC, msg)
