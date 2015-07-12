@@ -2,7 +2,9 @@
 
 import mraa
 
+
 class LEDWrapper(object):
+
     def __init__(self, pin):
         self.led = mraa.Gpio(pin)
         self.led.dir(mraa.DIR_OUT)

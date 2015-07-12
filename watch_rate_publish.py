@@ -10,7 +10,9 @@ from lib import ConsulWrapper as cw
 
 SLEEP = 5
 
+
 class WatchRatePublisher(object):
+
     def __init__(self, iotfoundation_conf):
         self.consul = cw.ConsulWrapper()
         self.bluemix = bw.BluemixWrapper(iotfoundation_conf)
@@ -47,4 +49,4 @@ if __name__ == "__main__":
         print "watch_rate_publish start"
         WatchRatePublisher(sys.argv[1]).check_state()
     except KeyboardInterrupt as err:
-        print "watch_rate_publish end" 
+        print "watch_rate_publish end"

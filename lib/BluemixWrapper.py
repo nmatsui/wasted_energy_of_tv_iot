@@ -9,7 +9,9 @@ TOPIC = "iot-2/evt/status/fmt/json"
 PORT = 1883
 USER = "use-token-auth"
 
+
 class BluemixWrapper(object):
+
     def __init__(self, conf):
         org, type, id, token = self.__parse_conf(conf)
         client_name = CLIENT_NAME_BASE % (org, type, id)
@@ -34,4 +36,3 @@ class BluemixWrapper(object):
 
         confs = [x.rstrip() for x in list(open(conf, "r"))]
         return (search(rorg), search(rtype), search(rid), search(rtoken))
-
