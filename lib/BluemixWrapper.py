@@ -5,7 +5,6 @@ import re
 
 CLIENT_NAME_BASE = "d:%s:%s:%s"
 URL_BASE = "%s.messaging.internetofthings.ibmcloud.com"
-TOPIC = "iot-2/evt/status/fmt/json"
 PORT = 1883
 USER = "use-token-auth"
 
@@ -13,15 +12,28 @@ class BluemixWrapper(object):
     def __init__(self, conf):
         org, type, id, token = self.__parse_conf(conf)
         client_name = CLIENT_NAME_BASE % (org, type, id)
-        url = URL_BASE % org
+        self.url = URL_BASE % org
 
         self.mqttc = paho.Client(client_name)
         self.mqttc.username_pw_set(USER, token)
-        self.mqttc.connect(url, PORT, 60)
+
+    def notify(self, topic, func):
+        def on_connect(client, userdata, flags,rc):
+            print "Connected"
+            client.subscribe(topic)
+
+        def on_message(client, userdata, msg):
+            func(str(msg.payload))
+
+        self.mqttc.on_connect = on_connect
+        self.mqttc.on_message = on_message
+
+    def connect(self):
+        self.mqttc.connect(self.url, PORT, 60)
         self.mqttc.loop_start()
 
-    def publish(self, msg):
-        self.mqttc.publish(TOPIC, msg)
+    def publish(self, topic, msg):
+        self.mqttc.publish(topic, msg)
 
     def __parse_conf(self, conf):
         def search(r):

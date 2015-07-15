@@ -1,6 +1,7 @@
 #! /usr/bin/env python
 # -*- coding: utf-8 -*-
 
+import subprocess
 import sys
 import time
 
@@ -9,11 +10,14 @@ from lib import BluemixWrapper as bw
 from lib import ConsulWrapper as cw
 
 SLEEP = 5
+POWER_CMD = "ssh -i /home/root/.ssh/id_rsa pi@raspi.local 'irsend SEND_ONCE tv power'"
 
 class WatchRatePublisher(object):
-    def __init__(self, iotfoundation_conf):
+    TOPIC = "iot-2/evt/status/fmt/json"
+
+    def __init__(self, bluemix):
         self.consul = cw.ConsulWrapper()
-        self.bluemix = bw.BluemixWrapper(iotfoundation_conf)
+        self.bluemix = bluemix
 
     def check_state(self):
         while True:
@@ -36,7 +40,18 @@ class WatchRatePublisher(object):
 
     def __publish(self, msg):
         print "power True : %s" % msg
-        self.bluemix.publish(msg)
+        self.bluemix.publish(WatchRatePublisher.TOPIC, msg)
+
+class NotifySubscriber(object):
+    TOPIC = "iot-2/cmd/notify/fmt/json"
+
+    def __init__(self, bluemix):
+        self.bluemix = bluemix
+
+    def notify(self):
+        def callback(msg):
+            subprocess.call(POWER_CMD, shell=True)
+        self.bluemix.notify(NotifySubscriber.TOPIC, callback)
 
 if __name__ == "__main__":
     if len(sys.argv) != 2:
@@ -45,6 +60,9 @@ if __name__ == "__main__":
 
     try:
         print "watch_rate_publish start"
-        WatchRatePublisher(sys.argv[1]).check_state()
+        bluemix = bw.BluemixWrapper(sys.argv[1])
+        NotifySubscriber(bluemix).notify()
+        bluemix.connect()
+        WatchRatePublisher(bluemix).check_state()
     except KeyboardInterrupt as err:
         print "watch_rate_publish end" 
