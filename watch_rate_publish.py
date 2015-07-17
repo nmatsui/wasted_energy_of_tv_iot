@@ -39,7 +39,7 @@ class WatchRatePublisher(object):
         return "{\"time\":\"" + now + "\", \"val\":" + v + "}"
 
     def __publish(self, msg):
-        print "power True : %s" % msg
+#        print "power True : %s" % msg
         self.bluemix.publish(WatchRatePublisher.TOPIC, msg)
 
 class NotifySubscriber(object):

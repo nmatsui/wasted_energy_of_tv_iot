@@ -65,7 +65,7 @@ class PowerDetector(object):
         return pressed
 
     def __notify_detect(self):
-        print "power button pressed. now %s" % self.power
+#        print "power button pressed. now %s" % self.power
         if self.power:
             self.led.on()
             self.consul.kv_put(cw.ConsulWrapper.POWERDETECT_KEY, True)
