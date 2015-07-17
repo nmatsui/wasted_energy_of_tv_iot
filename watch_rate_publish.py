@@ -11,6 +11,7 @@ from lib import ConsulWrapper as cw
 
 SLEEP = 5
 
+
 class WatchRatePublisher(object):
     TOPIC = "iot-2/evt/status/fmt/json"
 
@@ -65,4 +66,4 @@ if __name__ == "__main__":
         bluemix.connect()
         WatchRatePublisher(bluemix).check_state()
     except KeyboardInterrupt as err:
-        print "watch_rate_publish end" 
+        print "watch_rate_publish end"

@@ -2,6 +2,7 @@
 
 import consul
 
+
 class ConsulWrapper(object):
     FACEDETECT_KEY = "face_detected"
     POWERDETECT_KEY = "power_detected"

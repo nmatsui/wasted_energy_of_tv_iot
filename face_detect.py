@@ -8,6 +8,7 @@ from lib import LEDWrapper as lw
 
 LED_PIN = 8
 
+
 class FaceDetector(object):
     SCALE_FACTOR = 1.1
     MIN_NEIGHBORS = 5
@@ -25,9 +26,9 @@ class FaceDetector(object):
             gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
             faces = self.faceClassifier.detectMultiScale(
                 gray,
-                scaleFactor = FaceDetector.SCALE_FACTOR,
-                minNeighbors = FaceDetector.MIN_NEIGHBORS,
-                minSize = FaceDetector.MIN_SIZE
+                scaleFactor=FaceDetector.SCALE_FACTOR,
+                minNeighbors=FaceDetector.MIN_NEIGHBORS,
+                minSize=FaceDetector.MIN_SIZE
             )
             self.__notify_detect(len(faces))
             video.release()

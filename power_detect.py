@@ -15,6 +15,7 @@ SW_ON_PIN = 3
 SW_OFF_PIN = 2
 SPACE_SEC = 1
 
+
 class PowerDetector(object):
     POWER_BITS = "010000000000010000000001000000001011110010111101"
     FLAME_SPACE = 50
@@ -48,7 +49,6 @@ class PowerDetector(object):
                 self.st = self.nt
             if self.recv and self.last == 0 and self.nt - self.st > PowerDetector.FLAME_SPACE:
                 bits = decoder.KadenkyoDecoder(self.code).decode()
-#                print bits
                 pressed = self.__check_power(bits)
                 if pressed:
                     self.__notify_detect()
@@ -57,11 +57,10 @@ class PowerDetector(object):
     def __check_power(self, bits):
         pressed = False
         if bits == PowerDetector.POWER_BITS:
-#            print "power pressed"
             now = time.time()
             if now - self.last_power_time > SPACE_SEC:
                 self.power = not self.power
-                self.last_power_time  = now
+                self.last_power_time = now
                 pressed = True
         return pressed
 

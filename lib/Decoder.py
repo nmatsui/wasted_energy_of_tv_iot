@@ -7,7 +7,9 @@ L_LOW = 1.6
 D_LOW_0 = 0.4
 D_LOW_1 = 1.2
 
+
 class KadenkyoDecoder(object):
+
     def __init__(self, code):
         self.code = code
 
