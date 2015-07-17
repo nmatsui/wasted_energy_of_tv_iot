@@ -9,7 +9,7 @@ from lib import LEDWrapper as lw
 LED_PIN = 8
 POWER_CMD = "ssh pi@raspi.local -oStrictHostKeyChecking=no 'irsend SEND_ONCE tv power'"
 
-class PowerSender(object):
+class PowerIRSender(object):
     def __init__(self):
         self.consul = cw.ConsulWrapper()
         self.led = lw.LEDWrapper(LED_PIN)
@@ -25,4 +25,4 @@ class PowerSender(object):
             self.consul.kv_put(cw.ConsulWrapper.POWERDETECT_KEY, True)
 
 if __name__ == "__main__":
-    PowerSender().send()
+    PowerIRSender().send()

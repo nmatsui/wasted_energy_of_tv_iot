@@ -12,7 +12,7 @@ SW_ON_PIN = 3
 SW_OFF_PIN = 2
 
 
-class PowerDetector(object):
+class PowerSWDetector(object):
     def __init__(self):
         self.led = lw.LEDWrapper(LED_PIN)
         self.sw = sw.SWWrapper(SW_ON_PIN, SW_OFF_PIN)
@@ -34,7 +34,7 @@ class PowerDetector(object):
 
 if __name__ == "__main__":
     try:
-        print "power_detect start"
-        PowerDetector().detect()
+        print "power_sw_detect start"
+        PowerSWDetector().detect()
     except KeyboardInterrupt as err:
         print "power_detect end"

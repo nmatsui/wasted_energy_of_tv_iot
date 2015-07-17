@@ -10,7 +10,7 @@ LED_PIN = 8
 EVENT_SEPARATE_SEC = 5
 
 
-class PowerReceiver(object):
+class PowerIRReceiver(object):
     def __init__(self):
         self.consul = cw.ConsulWrapper()
 
@@ -29,4 +29,4 @@ class PowerReceiver(object):
                 self.consul.kv_put(cw.ConsulWrapper.POWERDETECT_KEY, True)
 
 if __name__ == "__main__":
-    PowerReceiver().receive()        
+    PowerIRReceiver().receive()        
