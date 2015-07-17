@@ -10,7 +10,6 @@ from lib import BluemixWrapper as bw
 from lib import ConsulWrapper as cw
 
 SLEEP = 5
-POWER_CMD = "ssh -i /home/root/.ssh/id_rsa pi@raspi.local 'irsend SEND_ONCE tv power'"
 
 class WatchRatePublisher(object):
     TOPIC = "iot-2/evt/status/fmt/json"
@@ -46,11 +45,12 @@ class NotifySubscriber(object):
     TOPIC = "iot-2/cmd/notify/fmt/json"
 
     def __init__(self, bluemix):
+        self.consul = cw.ConsulWrapper()
         self.bluemix = bluemix
 
     def notify(self):
         def callback(msg):
-            subprocess.call(POWER_CMD, shell=True)
+            self.consul.ev_fire(cw.ConsulWrapper.POWER_EVENT)
         self.bluemix.notify(NotifySubscriber.TOPIC, callback)
 
 if __name__ == "__main__":
