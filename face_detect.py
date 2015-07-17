@@ -18,6 +18,10 @@ class FaceDetector(object):
         self.led = lw.LEDWrapper(LED_PIN)
         self.consul = cw.ConsulWrapper()
         self.faceClassifier = cv2.CascadeClassifier(cascade_file_name)
+        self.led.off()
+
+    def __del__(self):
+        self.led.off()
 
     def detect(self):
         while True:

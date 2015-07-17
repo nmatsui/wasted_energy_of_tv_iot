@@ -6,6 +6,7 @@ import consul
 class ConsulWrapper(object):
     FACEDETECT_KEY = "face_detected"
     POWERDETECT_KEY = "power_detected"
+    LASTPOWERTIME_KEY = "last_power_time"
     POWER_EVENT = "power"
 
     def __init__(self):
