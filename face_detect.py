@@ -38,7 +38,7 @@ class FaceDetector(object):
             video.release()
 
     def __notify_detect(self, num_of_faces):
-#        print "%d face(s) detected" % num_of_faces
+        # print "%d face(s) detected" % num_of_faces
         if num_of_faces == 0:
             self.led.off()
             self.consul.kv_put(cw.ConsulWrapper.FACEDETECT_KEY, False)

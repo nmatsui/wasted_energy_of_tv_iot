@@ -20,7 +20,7 @@ class BluemixWrapper(object):
         self.mqttc.username_pw_set(USER, token)
 
     def notify(self, topic, func):
-        def on_connect(client, userdata, flags,rc):
+        def on_connect(client, userdata, flags, rc):
             print "Connected"
             client.subscribe(topic)
 

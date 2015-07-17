@@ -13,6 +13,7 @@ SW_OFF_PIN = 2
 
 
 class PowerSWDetector(object):
+
     def __init__(self):
         self.led = lw.LEDWrapper(LED_PIN)
         self.sw = sw.SWWrapper(SW_ON_PIN, SW_OFF_PIN)
@@ -27,7 +28,7 @@ class PowerSWDetector(object):
             if self.sw.is_on():
                 self.led.on()
                 self.consul.kv_put(cw.ConsulWrapper.POWERDETECT_KEY, True)
-            
+
             if self.sw.is_off():
                 self.led.off()
                 self.consul.kv_put(cw.ConsulWrapper.POWERDETECT_KEY, False)

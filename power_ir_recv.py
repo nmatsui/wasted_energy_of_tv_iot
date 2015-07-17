@@ -29,4 +29,4 @@ class PowerIRReceiver(object):
                 self.consul.kv_put(cw.ConsulWrapper.POWERDETECT_KEY, True)
 
 if __name__ == "__main__":
-    PowerIRReceiver().receive()        
+    PowerIRReceiver().receive()
