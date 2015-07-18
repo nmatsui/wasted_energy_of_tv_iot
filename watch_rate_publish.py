@@ -8,9 +8,12 @@ import time
 from datetime import datetime as dt
 from lib import BluemixWrapper as bw
 from lib import ConsulWrapper as cw
+from lib import LEDWrapper as lw
 
-SLEEP = 5
+SLEEP = 4
+BLINK = 1
 
+LED_PIN = 8
 
 class WatchRatePublisher(object):
     TOPIC = "iot-2/evt/status/fmt/json"
@@ -18,6 +21,11 @@ class WatchRatePublisher(object):
     def __init__(self, bluemix):
         self.consul = cw.ConsulWrapper()
         self.bluemix = bluemix
+        self.led = lw.LEDWrapper(LED_PIN)
+        self.led.off()
+
+    def __del__(self):
+        self.led.off()
 
     def check_state(self):
         while True:
@@ -41,6 +49,9 @@ class WatchRatePublisher(object):
     def __publish(self, msg):
         # print "power True : %s" % msg
         self.bluemix.publish(WatchRatePublisher.TOPIC, msg)
+        self.led.on()
+        time.sleep(BLINK)
+        self.led.off()
 
 
 class NotifySubscriber(object):
