@@ -15,6 +15,7 @@ BLINK = 1
 
 LED_PIN = 8
 
+
 class WatchRatePublisher(object):
     TOPIC = "iot-2/evt/status/fmt/json"
 
