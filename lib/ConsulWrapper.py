@@ -9,6 +9,7 @@ from requests.exceptions import ConnectionError
 RETRY_MAX = 60
 RETRY_WAIT_SEC = 5
 
+
 class ConsulWrapper(object):
     FACEDETECT_KEY = "face_detected"
     POWERDETECT_KEY = "power_detected"
@@ -22,7 +23,7 @@ class ConsulWrapper(object):
     def kv_put(self, key, value):
         def _f():
             return self.c.kv.put(key, str(value))
-        self.__retry(_f)        
+        self.__retry(_f)
 
     def kv_get(self, key):
         def _f():
