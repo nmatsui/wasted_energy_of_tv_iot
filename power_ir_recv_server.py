@@ -16,10 +16,11 @@ LED_PIN = 8
 SW_ON_PIN = 3
 SW_OFF_PIN = 2
 
+
 class PowerIRRecvHandler(SocketServer.StreamRequestHandler):
 
     def handle(self):
-#        print "connected from:", self.client_address
+        # print "connected from:", self.client_address
         sent_data = ""
         while True:
             data = self.request.recv(1024)
@@ -32,17 +33,18 @@ class PowerIRRecvHandler(SocketServer.StreamRequestHandler):
             ct = time.time()
             lt = consul.kv_get(cw.ConsulWrapper.LASTPOWERTIME_KEY)
             if (not lt) or (ct - float(lt["Value"]) > EVENT_SEPARATE_SEC):
-                led = lw.LEDWrapper(LED_PIN)                              
+                led = lw.LEDWrapper(LED_PIN)
                 consul.kv_put(cw.ConsulWrapper.LASTPOWERTIME_KEY, ct)
                 power = consul.kv_get(cw.ConsulWrapper.POWERDETECT_KEY)
-                if power and power["Value"] == "True":                      
-                    led.off()                         
+                if power and power["Value"] == "True":
+                    led.off()
                     consul.kv_put(cw.ConsulWrapper.POWERDETECT_KEY, False)
-                else:                                                          
-                    led.on()                                           
+                else:
+                    led.on()
                     consul.kv_put(cw.ConsulWrapper.POWERDETECT_KEY, True)
 
         self.request.close()
+
 
 class PowerSWDetector(object):
 

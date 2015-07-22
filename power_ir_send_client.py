@@ -9,6 +9,7 @@ from lib import LEDWrapper as lw
 
 LED_PIN = 8
 
+
 class PowerIRSendClient(object):
 
     def __init__(self):
@@ -29,7 +30,7 @@ class PowerIRSendClient(object):
                 self.led.on()
                 self.consul.kv_put(cw.ConsulWrapper.POWERDETECT_KEY, True)
         except socket.error as e:
-            print "error: %s" % e 
+            print "error: %s" % e
 
 if __name__ == "__main__":
     PowerIRSendClient().send()

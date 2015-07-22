@@ -5,6 +5,7 @@ import socket
 
 from lib import const
 
+
 class PowerIRRecvClient(object):
 
     def __init__(self):
