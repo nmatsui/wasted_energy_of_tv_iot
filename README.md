@@ -7,11 +7,11 @@ Bluemix Challenge 2015応募用のアプリケーション（IoT部分）
 日常生活において「点いているけれど見ていないテレビ」に費やされている時間を可視化する。
 テレビに集中していない場合は、自動的にテレビを消すこともできる。
 
-詳細は添付の企画書を参照。
+詳細は[企画書](https://github.com/nmatsui/wasted_energy_of_tv_iot/wiki/docs/proposal.pdf)を参照。
 
 ## 環境構築手順、操作手順
 
-添付の環境構築手順書、操作手順書を参照。
+添付の[環境構築手順書](https://github.com/nmatsui/wasted_energy_of_tv_iot/wiki/docs/construction.pdf)、[操作説明書](https://github.com/nmatsui/wasted_energy_of_tv_iot/wiki/docs/operation.pdf)を参照。
 
 ## LICENSE
 
